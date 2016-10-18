@@ -1,10 +1,39 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:p="http://www.springframework.org/schema/p"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 
-    <bean class="org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration"/>
+    <bean id="propertyConfigurer"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location">
+            <value>redis.properties</value>
+        </property>
+        <property name="fileEncoding" value="utf-8" />
+    </bean>
 
-    <bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
-          p:host-name="localhost" p:port="6379"/>
+    <bean class="org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration">
+        <property name="maxInactiveIntervalInSeconds" value="60"/>
+    </bean>
+
+    <bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+        <property name="port" value="${jedis.redisPort}" />
+        <property name="hostName" value="${jedis.redisAddress}" />
+        <property name="usePool" value="true" />
+        <property name="poolConfig" ref="jedisPoolConfig" />
+    </bean>
+
+    <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="jmxEnabled" value="${jedis.jmxEnabled}" />
+        <property name="lifo" value="${jedis.lifo}" />
+        <property name="maxIdle" value="${jedis.maxIdle}" />
+        <property name="maxTotal" value="${jedis.maxTotal}" />
+        <property name="maxWaitMillis" value="${jedis.maxWaitMillis}" />
+        <property name="minEvictableIdleTimeMillis" value="${jedis.minEvictableIdleTimeMillis}" />
+        <property name="minIdle" value="${jedis.minIdle}" />
+        <property name="numTestsPerEvictionRun" value="${jedis.numTestsPerEvictionRun}" />
+        <property name="softMinEvictableIdleTimeMillis" value="${jedis.softMinEvictableIdleTimeMillis}" />
+        <property name="testOnBorrow" value="${jedis.testOnBorrow}" />
+        <property name="testWhileIdle" value="${jedis.testWhileIdle}" />
+        <property name="timeBetweenEvictionRunsMillis" value="${jedis.timeBetweenEvictionRunsMillis}" />
+        <property name="blockWhenExhausted" value="${jedis.blockWhenExhausted}" />
+    </bean>
 </beans>
