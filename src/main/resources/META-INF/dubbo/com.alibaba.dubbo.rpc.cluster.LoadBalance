@@ -1,0 +1,1 @@
+peachLoadBalance=com.peach.DubboBalance.PeachHashLoadBalance
