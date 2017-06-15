@@ -13,7 +13,7 @@
 
     <mvc:annotation-driven/>
 
-    <!--<import resource="spring-session.xml"/>-->
-    <import resource="spring-dubbo-consumer.xml"/>
+    <import resource="spring-session.xml"/>
+    <!--<import resource="spring-dubbo-consumer.xml"/>-->
 
 </beans>
