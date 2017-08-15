@@ -18,6 +18,6 @@ public class HelloController {
     @RequestMapping(value = "/getsession",produces = "text/html;charset=utf-8")
     @ResponseBody
     public String getSession(HttpSession session, HttpServletRequest req) {
-        return session.getAttribute("name").toString()+"-----"+"110" + "id:"  + session.getId();
+        return session.getAttribute("name").toString()+"-----"+"120" + "id:"  + session.getId();
     }
 }
